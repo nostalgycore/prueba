@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería Interactiva | Manos de Ángel</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fce4ec; /* Rosa base */
+            font-family: 'Fredoka', cursive;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* === TÍTULO DINÁMICO === */
+        .titulo-categoria {
+            color: #d926d5;
+            font-size: 4rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 10px;
+            z-index: 20;
+            text-shadow: 4px 4px 0px #fff;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        /* === MANCHAS DE FONDO === */
+        .blob-bg {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.5;
+            transition: all 3s ease-in-out;
+            pointer-events: none;
+        }
+        .blob-grande { width: 900px; }
+        .blob-mediano { width: 600px; }
+
+        /* === CARRUSEL === */
+        .swiper {
+            width: 100%;
+            height: 65vh; 
+            margin-top: 10px;
+            overflow: visible !important;
+        }
+
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            opacity: 0; 
+            transition: opacity 0.4s;
+        }
+
+        .swiper-slide-active { opacity: 1; }
+
+        .slide-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 1000px;
+        }
+
+        /* --- IMÁGENES --- */
+        .img-interactive {
+            object-fit: contain;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+        }
+
+        .img-main {
+            position: relative;
+            height: 480px;
+            width: auto;
+            max-width: 450px;
+            z-index: 10;
+        }
+
+        .img-side {
+            position: absolute;
+            height: 320px;
+            width: auto;
+            max-width: 280px;
+            z-index: 5; 
+            opacity: 0.9;
+        }
+
+        .img-side.left {
+            left: 15%; 
+            transform: perspective(800px) rotateY(30deg) scale(0.9);
+        }
+
+        .img-side.right {
+            right: 15%; 
+            transform: perspective(800px) rotateY(-30deg) scale(0.9);
+        }
+
+        /* ZOOM AL CLICK */
+        .img-side.left.focused, .img-side.right.focused {
+            z-index: 50 !important;
+            transform: perspective(800px) rotateY(0deg) scale(1.4) !important;
+            filter: drop-shadow(0 30px 50px rgba(0,0,0,0.5));
+        }
+
+        .img-main.dimmed {
+            transform: scale(0.9);
+            opacity: 0.4;
+            filter: blur(3px);
+            z-index: 1;
+        }
+
+        /* === INFO PRODUCTO === */
+        .producto-info {
+            text-align: center;
+            z-index: 20;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .producto-nombre {
+            color: #d926d5;
+            font-size: 3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px white;
+            margin: 0;
+        }
+
+        /* === FLECHAS FIJAS === */
+        .swiper-button-next, .swiper-button-prev {
+            position: fixed !important; 
+            top: 50% !important;
+            transform: translateY(-50%);
+            width: 70px !important;
+            height: 70px !important;
+            background: #fff;
+            border-radius: 50%;
+            border: 3px solid #d926d5;
+            color: #d926d5 !important;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 9999 !important;
+        }
+        
+        .swiper-button-prev { left: 20px !important; }
+        .swiper-button-next { right: 20px !important; }
+
+        .swiper-button-next::after, .swiper-button-prev::after { font-size: 2rem; font-weight: 800; }
+
+        .btn-regresar { 
+            position: absolute; top: 30px; left: 30px; z-index: 100; 
+        }
+
+        @media (max-width: 768px) {
+            .titulo-categoria { font-size: 2.5rem; margin-top: 50px; }
+            .img-main { height: 280px; }
+            .img-side { height: 180px; }
+            .img-side.left { left: 5%; } 
+            .img-side.right { right: 5%; }
+            .swiper-button-next, .swiper-button-prev { width: 50px !important; height: 50px !important; }
+        }
+        @media (max-width: 1024px) {
+
+            /* 1. Título más pequeño y con espacio arriba */
+            .titulo-categoria {
+                font-size: 2.5rem; /* Reduce de 4rem a 2.5rem */
+                margin-top: 80px;  /* Baja el título para que no choque con el botón "Regresar" */
+                padding: 0 10px;   /* Un poco de margen a los lados */
+            }
+
+            /* 2. Altura del carrusel flexible */
+            .swiper {
+                height: 55vh;      /* Ocupa un poco menos de altura */
+                min-height: 400px; /* Pero asegura un mínimo para que quepan las fotos */
+            }
+
+            /* 3. IMAGEN CENTRAL (Reducida) */
+            .img-main {
+                height: 300px;    /* De 480px baja a 300px */
+                max-width: 70vw;  /* Que no ocupe más del 70% del ancho */
+            }
+
+            /* 4. IMÁGENES LATERALES (Reducidas y pegadas) */
+            .img-side {
+                height: 180px;    /* De 320px baja a 180px */
+                max-width: 40vw;
+                top: 50%;         /* Centrado vertical manual */
+                margin-top: -90px; /* Mitad de la altura para centrar exacto */
+            }
+
+            /* Ajustamos la posición para que entren en pantalla vertical */
+            .img-side.left { 
+                left: 2%;         /* Pegaditas al borde izquierdo */
+                transform: perspective(600px) rotateY(25deg) scale(0.9);
+            }
+            
+            .img-side.right { 
+                right: 2%;        /* Pegaditas al borde derecho */
+                transform: perspective(600px) rotateY(-25deg) scale(0.9);
+            }
+
+            /* 5. ZOOM EN CELULAR (Al dar click) */
+            /* Importante: En celular no deben crecer tanto o se salen */
+            .img-side.left.focused, .img-side.right.focused {
+                transform: perspective(600px) rotateY(0deg) scale(1.2) !important;
+                max-width: 90vw; /* Que llenen la pantalla pero sin salirse */
+                height: auto;    /* Altura automática para no deformar */
+                max-height: 400px;
+            }
+
+            /* 6. Flechas más pequeñas y táctiles */
+            .swiper-button-next, .swiper-button-prev {
+                width: 50px !important;
+                height: 50px !important;
+                top: auto !important;   /* Quitamos el centrado exacto */
+                bottom: 10% !important; /* Las bajamos un poco para que sea fácil darles con el dedo */
+                transform: none;
+            }
+            /* Separamos las flechas de los bordes para no tapar las fotos laterales */
+            .swiper-button-prev { left: 10px !important; }
+            .swiper-button-next { right: 10px !important; }
+
+            .swiper-button-next::after, .swiper-button-prev::after { 
+                font-size: 1.5rem; 
+            }
+
+            /* 7. Texto del producto (ajustado) */
+            .producto-nombre {
+                font-size: 1.8rem; /* Texto más pequeño */
+            }
+            
+            /* 8. Botón Regresar (Ajuste visual) */
+            .btn-regresar {
+                top: 20px;
+                left: 20px;
+                padding: 8px 15px; /* Más compacto */
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="btn btn-light rounded-pill px-4 shadow btn-regresar fw-bold" style="color: #d926d5;">
+        <i class="bi bi-arrow-left"></i> Regresar
+    </a>
+
+    <h1 class="titulo-categoria">CARGANDO...</h1>
+
+    <img src="img/mancha-fondo.png" class="blob-bg blob-grande" id="blob1" style="top: -10%; left: -10%;">
+    <img src="img/mancha-fondo.png" class="blob-bg blob-mediano" id="blob2" style="bottom: -10%; right: -10%;">
+    <img src="img/mancha-fondo.png" class="blob-bg blob-mediano" id="blob3" style="top: 20%; right: 10%;">
+    <img src="img/mancha-fondo.png" class="blob-bg blob-grande" id="blob4" style="bottom: 10%; left: 10%;">
+
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="swiper-wrapper"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <div class="producto-info">
+        <h2 id="nombre-producto" class="producto-nombre"></h2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // CONFIGURACIÓN DE TU PROYECTO NUEVO
+        const firebaseConfig = {
+            apiKey: "AIzaSyCNiUdX80_2hRH_EHOsVxiZqFeP2PYXVGY",
+            authDomain: "manos-de-angel-1c692.firebaseapp.com",
+            projectId: "manos-de-angel-1c692",
+            storageBucket: "manos-de-angel-1c692.firebasestorage.app",
+            messagingSenderId: "102505109232",
+            appId: "1:102505109232:web:9c2af7b8845140d8ad9435",
+            measurementId: "G-LHZ40QXQ2N"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- CEREBRO INTELIGENTE: Lee la URL ---
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // 1. ¿Qué categoría me pidieron? (Si no hay, usa Princesas por defecto)
+        const catParam = urlParams.get('categoria'); 
+        const CATEGORIA_A_MOSTRAR = catParam ? catParam : "Princesas"; 
+        
+        // 2. ¿Me pidieron un producto específico? (Para ir directo a él)
+        const prodParam = urlParams.get('producto');
+
+        // Ponemos el título correcto en la pantalla
+        document.querySelector('.titulo-categoria').innerText = CATEGORIA_A_MOSTRAR;
+
+        async function cargarCarrusel() {
+            const wrapper = document.getElementById('swiper-wrapper');
+            const tituloEl = document.getElementById('nombre-producto');
+            
+            // Consultamos a Firebase SOLO por esa categoría
+            const q = query(collection(db, "productos"), where("categoria", "==", CATEGORIA_A_MOSTRAR));
+            const querySnapshot = await getDocs(q);
+            const productos = [];
+
+            querySnapshot.forEach((doc) => productos.push(doc.data()));
+
+            if(productos.length === 0) {
+                tituloEl.innerText = "Próximamente...";
+                return;
+            }
+
+            // Buscamos en qué posición está el producto que el usuario clicó (si viene del buscador)
+            let slideInicial = 0;
+
+            productos.forEach((prod, index) => {
+                // Si encontramos el producto buscado, guardamos su número
+                if (prodParam && prod.nombre === prodParam) {
+                    slideInicial = index;
+                }
+
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                slide.setAttribute('data-name', prod.nombre);
+                
+                const content = document.createElement('div');
+                content.className = 'slide-content';
+
+                // FOTO CENTRAL
+                const imgMain = document.createElement('img');
+                imgMain.src = prod.imagenPrincipal;
+                imgMain.className = 'img-interactive img-main';
+                imgMain.onclick = () => resetearFoco(content);
+                content.appendChild(imgMain);
+
+                // FOTO IZQUIERDA
+                if(prod.galeria && prod.galeria[0]) {
+                    const imgLeft = document.createElement('img');
+                    imgLeft.src = prod.galeria[0];
+                    imgLeft.className = 'img-interactive img-side left';
+                    imgLeft.onclick = (e) => focarImagen(e, content);
+                    content.appendChild(imgLeft);
+                }
+
+                // FOTO DERECHA
+                if(prod.galeria && prod.galeria[1]) {
+                    const imgRight = document.createElement('img');
+                    imgRight.src = prod.galeria[1];
+                    imgRight.className = 'img-interactive img-side right';
+                    imgRight.onclick = (e) => focarImagen(e, content);
+                    content.appendChild(imgRight);
+                }
+                
+                slide.appendChild(content);
+                wrapper.appendChild(slide);
+            });
+
+            // INICIAR SWIPER EN LA POSICIÓN CORRECTA
+            const swiper = new Swiper(".mySwiper", {
+                initialSlide: slideInicial, // <--- AQUÍ OCURRE LA MAGIA
+                effect: "fade", 
+                fadeEffect: { crossFade: true },
+                speed: 600,
+                allowTouchMove: false,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                on: {
+                    slideChange: function () {
+                        actualizarInfo(this);
+                        moverManchasAleatoriamente();
+                        // Resetear zooms al cambiar
+                        document.querySelectorAll('.focused').forEach(el => el.classList.remove('focused'));
+                        document.querySelectorAll('.dimmed').forEach(el => el.classList.remove('dimmed'));
+                    },
+                    init: function() {
+                        actualizarInfo(this);
+                        moverManchasAleatoriamente();
+                    }
+                }
+            });
+        }
+
+        window.focarImagen = function(event, container) {
+            event.stopPropagation();
+            if(event.target.classList.contains('focused')) {
+                resetearFoco(container);
+                return;
+            }
+            resetearFoco(container); 
+            const clickedImg = event.target;
+            const mainImg = container.querySelector('.img-main');
+            clickedImg.classList.add('focused');
+            if(mainImg) mainImg.classList.add('dimmed');
+        }
+
+        window.resetearFoco = function(container) {
+            container.querySelectorAll('.focused').forEach(img => img.classList.remove('focused'));
+            container.querySelectorAll('.dimmed').forEach(img => img.classList.remove('dimmed'));
+        }
+
+        function actualizarInfo(swiperInstance) {
+            const tituloEl = document.getElementById('nombre-producto');
+            const slidesReales = swiperInstance.slides;
+            const nombre = slidesReales[swiperInstance.activeIndex].getAttribute('data-name');
+            
+            tituloEl.style.opacity = 0;
+            tituloEl.style.transform = "translateY(20px)";
+            setTimeout(() => {
+                tituloEl.innerText = nombre;
+                tituloEl.style.opacity = 1;
+                tituloEl.style.transform = "translateY(0)";
+            }, 300);
+        }
+
+        function moverManchasAleatoriamente() {
+            const blobs = document.querySelectorAll('.blob-bg');
+            blobs.forEach(blob => {
+                const randomTop = Math.floor(Math.random() * 90) - 10;
+                const randomLeft = Math.floor(Math.random() * 90) - 10;
+                const randomScale = 0.8 + Math.random() * 0.4;
+                const randomRot = Math.floor(Math.random() * 360);
+                blob.style.top = randomTop + "%";
+                blob.style.left = randomLeft + "%";
+                blob.style.transform = `rotate(${randomRot}deg) scale(${randomScale})`;
+            });
+        }
+
+        cargarCarrusel();
+    </script>
+</body>
+</html>

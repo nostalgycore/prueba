@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manos de Ángel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-custom navbar-dark">
+        <div class="container d-flex justify-content-between align-items-center">
+            
+            <a class="navbar-brand brand-text" href="#">
+                Manos de Ángel
+            </a>
+
+            <form class="d-flex w-100 ms-3 contenedor-buscador" style="max-width: 400px;" id="form-buscador">
+                <div class="input-group">
+                    <input class="form-control search-input" 
+                        type="search" 
+                        placeholder="Busca tu personaje..." 
+                        id="input-buscador" 
+                        autocomplete="off"> <button class="btn btn-search" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+
+                <div id="lista-sugerencias"></div>
+            </form>
+
+        </div>
+    </nav>
+    <header class="parallax-section">
+        <div class="overlay"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="row align-items-center h-100">
+                
+                <div class="col-12 col-lg-5 text-start pt-5 pt-lg-0">
+                    <h5 class="text-white text-uppercase fw-bold mb-3 animate-fade-up">
+                        Catálogo Manos de Ángel
+                    </h5>
+                    <h1 class="display-3 text-white fw-bold mb-4 text-shadow animate-fade-up">
+                        ¿Listo/a para <br>
+                        ahorrar con estilo?
+                    </h1>
+                    <div class="animate-fade-up delay-1 mt-4">
+                        <a href="#contacto" class="btn btn-custom rounded-pill px-5 py-3 fw-bold shadow-lg">
+                            CONTÁCTAME
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-7 text-center mt-0 mt-lg-0 position-relative">
+                    <div class="blob-bg"></div>
+                    <img src="img/logo-manos.png" alt="Cerdito Manos de Ángel" class="img-fluid banner-logo" id="logo-cerdito">
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="content-wrapper">
+        <!--section id="categorias" class="py-5">
+            <div class="container pt-4">
+                
+                <div class="row mb-5 text-center">
+                    <div class="col-12">
+                        <h2 class="titulo-categorias">
+                            Visita nuestros diseños en las siguientes secciones:
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row g-3 justify-content-center">
+                    
+                    <div class="col-6 col-md-4"><a href="caricaturas.html" class="btn btn-categoria w-100">Caricaturas</a></div>
+                    <div class="col-6 col-md-4"><a href="mascotas.html" class="btn btn-categoria w-100">Mascotas</a></div>
+                    <div class="col-6 col-md-4"><a href="lunetas.html" class="btn btn-categoria w-100">Lunetas</a></div>
+
+                    <div class="col-6 col-md-4"><a href="superheroes.html" class="btn btn-categoria w-100">Superhéroes</a></div>
+                    <div class="col-6 col-md-4"><a href="futbol.html" class="btn btn-categoria w-100">Fútbol</a></div>
+                    <div class="col-6 col-md-4"><a href="tamanos.html" class="btn btn-categoria w-100">Tamaños</a></div>
+
+                    <div class="col-6 col-md-4"><a href="princesas.html" class="btn btn-categoria w-100">Princesas</a></div>
+                    <div class="col-6 col-md-4"><a href="halloween.html" class="btn btn-categoria w-100">Halloween</a></div>
+                    <div class="col-6 col-md-4"><a href="unicornio.html" class="btn btn-categoria w-100">Unicornio</a></div>
+
+                    <div class="col-6 col-md-4"><a href="anime.html" class="btn btn-categoria w-100">Anime</a></div>
+                    <div class="col-6 col-md-4"><a href="navidad.html" class="btn btn-categoria w-100">Navidad</a></div>
+                    <div class="col-6 col-md-4"><a href="especiales.html" class="btn btn-categoria w-100">Especiales</a></div>
+
+                    <div class="col-6 col-md-4"><a href="dinosaurios.html" class="btn btn-categoria w-100">Dinosaurios</a></div>
+                    <div class="col-6 col-md-4"><a href="profesiones.html" class="btn btn-categoria w-100">Oficios Profesiones</a></div>
+                    <div class="col-6 col-md-4"><a href="disfraces.html" class="btn btn-categoria w-100">Disfraces</a></div>
+
+                    <div class="col-6 col-md-4"><a href="animales.html" class="btn btn-categoria w-100">Animales</a></div>
+                    <div class="col-6 col-md-4"><a href="novios.html" class="btn btn-categoria w-100">Novios</a></div>
+                    <div class="col-6 col-md-4"><a href="ceremonia.html" class="btn btn-categoria w-100">Ceremonia</a></div>
+
+                    <div class="col-6 col-md-4"><a href="graduacion.html" class="btn btn-categoria w-100">Graduación</a></div>
+                    <div class="col-6 col-md-4"><a href="publicidad.html" class="btn btn-categoria w-100">Publicidad</a></div>
+                    <div class="col-6 col-md-4"><a href="centros.html" class="btn btn-categoria w-100">Centros</a></div>
+
+                    <div class="col-6 col-md-4"><a href="fantasia.html" class="btn btn-categoria w-100">Fantasía</a></div>
+                    <div class="col-6 col-md-4"><a href="metas.html" class="btn btn-categoria w-100">Metas</a></div>
+                    
+                </div>
+            </div>
+        </section-->
+        <section class="py-5">
+            <div class="container text-center">
+                <h3 class="mb-5 fw-bold" style="color: #d926d5; font-family: 'Fredoka'; font-size: 2rem;">
+                    VISITA NUESTROS DISEÑOS EN LAS SIGUIENTES SECCIONES:
+                </h3>
+                
+                <div id="contenedor-categorias">
+                    </div>
+            </div>
+        </section>
+        <section id="galeria-tamanos" class="py-5">
+            <div class="container">
+                
+                <div class="row text-center mb-4">
+                    <div class="col-12">
+                        <h2 class="titulo-galeria">Tamaños Disponibles</h2>
+                    </div>
+                </div>
+
+                <div class="row g-4 justify-content-center">
+                    
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/1.png" class="img-fluid rounded-3" alt="Tamaño Chico">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/2.png" class="img-fluid rounded-3" alt="Tamaño Mediano">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/3.png" class="img-fluid rounded-3" alt="Tamaño Grande">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/4.png" class="img-fluid rounded-3" alt="Modelo Jumbo">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/5.png" class="img-fluid rounded-3" alt="Edición Especial">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/6.png" class="img-fluid rounded-3" alt="Personalizado">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/7.png" class="img-fluid rounded-3" alt="Sin Asa">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/8.png" class="img-fluid rounded-3" alt="Con Asa">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card-marco">
+                            <img src="img/9.png" class="img-fluid rounded-3" alt="Pack Ahorro">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <footer class="footer-custom py-4 text-center">
+            <div class="container">
+                <p class="mb-0 text-white fw-bold">
+                    &copy; 2025 Manos de Ángel
+                </p>
+                <small class="text-white-50" style="font-size: 0.8rem;">
+                    Diseñado con cariño para tus ahorros.
+                </small>
+            </div>
+        </footer>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('scroll', function() {
+            const logo = document.getElementById('logo-cerdito');
+            
+            // Solo aplicamos el efecto si el logo existe y está visible
+            if (logo) {
+                const scrollY = window.scrollY;
+                
+                // Movemos el logo hacia arriba (velocidad 0.4x)
+                // Cuanto mayor sea el número, más rápido "huye" hacia arriba
+                logo.style.transform = `translateY(-${scrollY * 0.4}px)`;
+            }
+        });
+
+        // LISTA DE TUS 29 CATEGORÍAS (Copia exacta del Admin)
+        const categorias = [
+            "Caricaturas", "Mascotas", "Lunetas", "Superhéroes", "Fútbol", 
+            "Tamaños", "Princesas", "Halloween", "Unicornio", "Anime", 
+            "Navidad", "Especiales", "Dinosaurios", "Oficios Profesiones", "Disfraces", 
+            "Animales", "Novios", "Ceremonia", "Graduación", "Publicidad", 
+            "Centros", "Fantasía", "Metas", "Bautizo", "Comunión", "XV Años", 
+            "Deportes", "Música", "Retro" 
+        ];
+
+        const contenedorCat = document.getElementById('contenedor-categorias');
+
+        // Generar botones automáticamente
+        categorias.sort().forEach(cat => {
+            // Creamos el enlace inteligente
+            // encodeURIComponent sirve para que espacios o acentos no rompan el link
+            const link = `carrusel.html?categoria=${encodeURIComponent(cat)}`;
+            
+            const btn = document.createElement('a');
+            btn.href = link;
+            btn.className = "btn btn-categoria";
+            btn.innerText = cat;
+            
+            contenedorCat.appendChild(btn);
+        });
+
+        const listaSugerencias = document.getElementById('lista-sugerencias');
+
+        // EVENTO: AL ESCRIBIR
+        inputBuscador.addEventListener('input', (e) => {
+            const texto = e.target.value.toLowerCase();
+            
+            // 1. Filtrar el catálogo de abajo (GRID)
+            const filtrados = todosLosProductos.filter(p => 
+                p.nombre.toLowerCase().includes(texto) || 
+                p.categoria.toLowerCase().includes(texto)
+            );
+            mostrarProductos(filtrados); // Actualiza las tarjetas grandes
+
+            // 2. Mostrar SUGERENCIAS FLOTANTES (Dropdown)
+            mostrarListaSugerencias(filtrados, texto);
+        });
+
+        // FUNCIÓN PARA DIBUJAR LA LISTA FLOTANTE
+        function mostrarListaSugerencias(lista, textoEscrito) {
+            listaSugerencias.innerHTML = ""; // Limpiar
+            
+            // Si no hay texto o no hay resultados, ocultamos la lista
+            if (textoEscrito.length === 0 || lista.length === 0) {
+                listaSugerencias.style.display = 'none';
+                return;
+            }
+
+            // Si hay resultados, mostramos la lista
+            listaSugerencias.style.display = 'block';
+
+            // Solo mostramos máximo 5 sugerencias para no saturar
+            const top5 = lista.slice(0, 5); 
+
+            top5.forEach(prod => {
+                const item = document.createElement('div');
+                item.className = 'item-sugerencia';
+                
+                // Creamos el link directo
+                const link = `carrusel.html?categoria=${encodeURIComponent(prod.categoria)}&producto=${encodeURIComponent(prod.nombre)}`;
+
+                item.innerHTML = `
+                    <img src="${prod.imagenPrincipal}" alt="foto">
+                    <div>
+                        <strong>${prod.nombre}</strong>
+                        <small>${prod.categoria}</small>
+                    </div>
+                `;
+
+                // AL DAR CLIC EN UNA SUGERENCIA
+                item.addEventListener('click', () => {
+                    window.location.href = link; // Te lleva directo
+                });
+
+                listaSugerencias.appendChild(item);
+            });
+        }
+
+        // EVENTO: OCULTAR LISTA SI HACES CLIC AFUERA
+        document.addEventListener('click', (e) => {
+            // Si el clic NO fue dentro del buscador ni de la lista
+            if (!formBuscador.contains(e.target)) {
+                listaSugerencias.style.display = 'none';
+            }
+        });
+
+        // EVENTO: VOLVER A MOSTRAR SI HACES CLIC EN EL INPUT
+        inputBuscador.addEventListener('focus', () => {
+            if (inputBuscador.value.length > 0) {
+                listaSugerencias.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
