@@ -177,82 +177,91 @@
             .img-side.right { right: 5%; }
             .swiper-button-next, .swiper-button-prev { width: 50px !important; height: 50px !important; }
         }
-        @media (max-width: 1024px) {
+         @media (max-width: 1024px) {
 
-            /* 1. Título más pequeño y con espacio arriba */
+            /* 1. BLOQUEAR EL SCROLL (Adiós espacio vacío) */
+            body, html {
+                height: 100%;
+                overflow: hidden; /* Corta lo que sobre */
+                position: fixed;  /* Evita rebotes en iPhone */
+                width: 100%;
+            }
+
+            /* 2. AJUSTE DE TÍTULO */
             .titulo-categoria {
-                font-size: 2.5rem; /* Reduce de 4rem a 2.5rem */
-                margin-top: 80px;  /* Baja el título para que no choque con el botón "Regresar" */
-                padding: 0 10px;   /* Un poco de margen a los lados */
+                font-size: 2.2rem;
+                margin-top: 60px;
+                margin-bottom: 0;
             }
 
-            /* 2. Altura del carrusel flexible */
+            /* 3. CONTENEDOR PRINCIPAL */
             .swiper {
-                height: 55vh;      /* Ocupa un poco menos de altura */
-                min-height: 400px; /* Pero asegura un mínimo para que quepan las fotos */
+                height: 60vh; /* Altura fija */
+                min-height: 350px;
+                margin-top: 0;
+                overflow: visible !important;
             }
 
-            /* 3. IMAGEN CENTRAL (Reducida) */
+            /* 4. IMAGEN CENTRAL */
             .img-main {
-                height: 300px;    /* De 480px baja a 300px */
-                max-width: 70vw;  /* Que no ocupe más del 70% del ancho */
+                height: 260px;
+                width: auto;
+                max-width: 65vw;
+                object-fit: contain;
+                position: relative;
+                top: 20px; /* Un poco más abajo del título */
             }
 
-            /* 4. IMÁGENES LATERALES (Reducidas y pegadas) */
+            /* 5. IMÁGENES LATERALES (FLOTANTES) */
+            /* Al ser absolute, JAMÁS se pondrán debajo de nada */
             .img-side {
-                height: 180px;    /* De 320px baja a 180px */
-                max-width: 40vw;
-                top: 50%;         /* Centrado vertical manual */
-                margin-top: -90px; /* Mitad de la altura para centrar exacto */
+                position: absolute !important; 
+                top: 50% !important;
+                margin-top: 0 !important;
+                height: 140px; /* Un poco más chicas para que no estorben */
+                width: auto;
+                z-index: 5;
             }
 
-            /* Ajustamos la posición para que entren en pantalla vertical */
+            /* Izquierda: Pegada al borde */
             .img-side.left { 
-                left: 2%;         /* Pegaditas al borde izquierdo */
-                transform: perspective(600px) rotateY(25deg) scale(0.9);
+                left: -15px !important; 
+                transform: translateY(-50%) perspective(400px) rotateY(20deg) scale(0.85);
             }
             
+            /* Derecha: Pegada al borde */
             .img-side.right { 
-                right: 2%;        /* Pegaditas al borde derecho */
-                transform: perspective(600px) rotateY(-25deg) scale(0.9);
+                right: -15px !important; 
+                transform: translateY(-50%) perspective(400px) rotateY(-20deg) scale(0.85);
             }
 
-            /* 5. ZOOM EN CELULAR (Al dar click) */
-            /* Importante: En celular no deben crecer tanto o se salen */
+            /* 6. ZOOM CONTROLADO (Al tocar) */
             .img-side.left.focused, .img-side.right.focused {
-                transform: perspective(600px) rotateY(0deg) scale(1.2) !important;
-                max-width: 90vw; /* Que llenen la pantalla pero sin salirse */
-                height: auto;    /* Altura automática para no deformar */
-                max-height: 400px;
+                z-index: 100 !important;
+                left: 50% !important;
+                right: auto !important;
+                top: 50% !important;
+                transform: translate(-50%, -50%) scale(1.5) !important; /* Crece bastante */
+                max-width: 85vw;
             }
 
-            /* 6. Flechas más pequeñas y táctiles */
-            .swiper-button-next, .swiper-button-prev {
-                width: 50px !important;
-                height: 50px !important;
-                top: auto !important;   /* Quitamos el centrado exacto */
-                bottom: 10% !important; /* Las bajamos un poco para que sea fácil darles con el dedo */
-                transform: none;
-            }
-            /* Separamos las flechas de los bordes para no tapar las fotos laterales */
-            .swiper-button-prev { left: 10px !important; }
-            .swiper-button-next { right: 10px !important; }
-
-            .swiper-button-next::after, .swiper-button-prev::after { 
-                font-size: 1.5rem; 
-            }
-
-            /* 7. Texto del producto (ajustado) */
-            .producto-nombre {
-                font-size: 1.8rem; /* Texto más pequeño */
+            /* 7. NOMBRE Y FLECHAS */
+            .producto-info {
+                position: absolute;
+                bottom: 8%; /* Pegado abajo */
+                width: 100%;
+                z-index: 50;
             }
             
-            /* 8. Botón Regresar (Ajuste visual) */
-            .btn-regresar {
-                top: 20px;
-                left: 20px;
-                padding: 8px 15px; /* Más compacto */
-                font-size: 0.9rem;
+            .producto-nombre {
+                font-size: 1.8rem;
+            }
+
+            .swiper-button-next, .swiper-button-prev {
+                width: 45px !important;
+                height: 45px !important;
+                bottom: 18% !important; /* Arriba del nombre */
+                top: auto !important;
             }
         }
     </style>
@@ -449,4 +458,5 @@
         cargarCarrusel();
     </script>
 </body>
+
 </html>
