@@ -3,20 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería Interactiva | Manos de Ángel</title>
-    
+    <title>Catálogo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #fce4ec; /* Rosa base */
+            background-color: #fce4ec;
             font-family: 'Fredoka', cursive;
             height: 100vh;
             overflow: hidden;
@@ -26,7 +22,6 @@
             position: relative;
         }
 
-        /* === TÍTULO DINÁMICO === */
         .titulo-categoria {
             color: #d926d5;
             font-size: 4rem;
@@ -39,7 +34,6 @@
             text-align: center;
         }
 
-        /* === MANCHAS DE FONDO === */
         .blob-bg {
             position: absolute;
             z-index: -1;
@@ -50,7 +44,6 @@
         .blob-grande { width: 900px; }
         .blob-mediano { width: 600px; }
 
-        /* === CARRUSEL === */
         .swiper {
             width: 100%;
             height: 65vh; 
@@ -79,7 +72,6 @@
             max-width: 1000px;
         }
 
-        /* --- IMÁGENES --- */
         .img-interactive {
             object-fit: contain;
             transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -114,7 +106,6 @@
             transform: perspective(800px) rotateY(-30deg) scale(0.9);
         }
 
-        /* ZOOM AL CLICK */
         .img-side.left.focused, .img-side.right.focused {
             z-index: 50 !important;
             transform: perspective(800px) rotateY(0deg) scale(1.4) !important;
@@ -128,7 +119,6 @@
             z-index: 1;
         }
 
-        /* === INFO PRODUCTO === */
         .producto-info {
             text-align: center;
             z-index: 20;
@@ -145,7 +135,6 @@
             margin: 0;
         }
 
-        /* === FLECHAS FIJAS === */
         .swiper-button-next, .swiper-button-prev {
             position: fixed !important; 
             top: 50% !important;
@@ -179,11 +168,10 @@
         }
          @media (max-width: 1024px) {
 
-            /* 1. BLOQUEAR EL SCROLL (Adiós espacio vacío) */
             body, html {
                 height: 100%;
-                overflow: hidden; /* Corta lo que sobre */
-                position: fixed;  /* Evita rebotes en iPhone */
+                overflow: hidden;
+                position: fixed;
                 width: 100%;
             }
 
@@ -193,61 +181,53 @@
                 margin-bottom: 10px;
             }
 
-            /* 3. CONTENEDOR PRINCIPAL */
             .swiper {
-                height: 60vh; /* Altura fija */
+                height: 60vh;
                 min-height: 350px;
                 margin-top: 0;
                 overflow: visible !important;
             }
 
-            /* 4. IMAGEN CENTRAL */
             .img-main {
                 height: 260px;
                 width: auto;
                 max-width: 65vw;
                 object-fit: contain;
                 position: relative;
-                top: 20px; /* Un poco más abajo del título */
+                top: 20px;
             }
 
-            /* 5. IMÁGENES LATERALES (FLOTANTES) */
-            /* Al ser absolute, JAMÁS se pondrán debajo de nada */
             .img-side {
                 position: absolute !important; 
                 top: 50% !important;
                 margin-top: 0 !important;
-                height: 140px; /* Un poco más chicas para que no estorben */
+                height: 140px;
                 width: auto;
                 z-index: 5;
             }
 
-            /* Izquierda: Pegada al borde */
             .img-side.left { 
-                left: -15px !important; 
+                left: 15px !important; 
                 transform: translateY(-50%) perspective(400px) rotateY(20deg) scale(0.85);
             }
             
-            /* Derecha: Pegada al borde */
             .img-side.right { 
-                right: -15px !important; 
+                right: 15px !important; 
                 transform: translateY(-50%) perspective(400px) rotateY(-20deg) scale(0.85);
             }
 
-            /* 6. ZOOM CONTROLADO (Al tocar) */
             .img-side.left.focused, .img-side.right.focused {
                 z-index: 100 !important;
                 left: 50% !important;
                 right: auto !important;
                 top: 50% !important;
-                transform: translate(-50%, -50%) scale(1.5) !important; /* Crece bastante */
+                transform: translate(-50%, -50%) scale(1.5) !important;
                 max-width: 85vw;
             }
 
-            /* 7. NOMBRE Y FLECHAS */
             .producto-info {
                 position: absolute;
-                bottom: 8%; /* Pegado abajo */
+                bottom: 8%;
                 width: 100%;
                 z-index: 50;
             }
@@ -259,42 +239,34 @@
             .swiper-button-next, .swiper-button-prev {
                 width: 45px !important;
                 height: 45px !important;
-                bottom: 18% !important; /* Arriba del nombre */
+                bottom: 18% !important; 
                 top: auto !important;
             }
         }
     </style>
 </head>
 <body>
-
     <a href="index.html" class="btn btn-light rounded-pill px-4 shadow btn-regresar fw-bold" style="color: #d926d5;">
         <i class="bi bi-arrow-left"></i> Regresar
     </a>
-
     <h1 class="titulo-categoria">CARGANDO...</h1>
-
     <img src="img/mancha-fondo.png" class="blob-bg blob-grande" id="blob1" style="top: -10%; left: -10%;">
     <img src="img/mancha-fondo.png" class="blob-bg blob-mediano" id="blob2" style="bottom: -10%; right: -10%;">
     <img src="img/mancha-fondo.png" class="blob-bg blob-mediano" id="blob3" style="top: 20%; right: 10%;">
     <img src="img/mancha-fondo.png" class="blob-bg blob-grande" id="blob4" style="bottom: 10%; left: 10%;">
-
     <div class="swiper mySwiper">
         <div class="swiper-wrapper" id="swiper-wrapper"></div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
     </div>
-
     <div class="producto-info">
         <h2 id="nombre-producto" class="producto-nombre"></h2>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-        // CONFIGURACIÓN DE TU PROYECTO NUEVO
         const firebaseConfig = {
             apiKey: "AIzaSyCNiUdX80_2hRH_EHOsVxiZqFeP2PYXVGY",
             authDomain: "manos-de-angel-1c692.firebaseapp.com",
@@ -308,24 +280,19 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- CEREBRO INTELIGENTE: Lee la URL ---
         const urlParams = new URLSearchParams(window.location.search);
         
-        // 1. ¿Qué categoría me pidieron? (Si no hay, usa Princesas por defecto)
         const catParam = urlParams.get('categoria'); 
         const CATEGORIA_A_MOSTRAR = catParam ? catParam : "Princesas"; 
         
-        // 2. ¿Me pidieron un producto específico? (Para ir directo a él)
         const prodParam = urlParams.get('producto');
 
-        // Ponemos el título correcto en la pantalla
         document.querySelector('.titulo-categoria').innerText = CATEGORIA_A_MOSTRAR;
 
         async function cargarCarrusel() {
             const wrapper = document.getElementById('swiper-wrapper');
             const tituloEl = document.getElementById('nombre-producto');
             
-            // Consultamos a Firebase SOLO por esa categoría
             const q = query(collection(db, "productos"), where("categoria", "==", CATEGORIA_A_MOSTRAR));
             const querySnapshot = await getDocs(q);
             const productos = [];
@@ -337,11 +304,9 @@
                 return;
             }
 
-            // Buscamos en qué posición está el producto que el usuario clicó (si viene del buscador)
             let slideInicial = 0;
 
             productos.forEach((prod, index) => {
-                // Si encontramos el producto buscado, guardamos su número
                 if (prodParam && prod.nombre === prodParam) {
                     slideInicial = index;
                 }
@@ -353,14 +318,12 @@
                 const content = document.createElement('div');
                 content.className = 'slide-content';
 
-                // FOTO CENTRAL
                 const imgMain = document.createElement('img');
                 imgMain.src = prod.imagenPrincipal;
                 imgMain.className = 'img-interactive img-main';
                 imgMain.onclick = () => resetearFoco(content);
                 content.appendChild(imgMain);
 
-                // FOTO IZQUIERDA
                 if(prod.galeria && prod.galeria[0]) {
                     const imgLeft = document.createElement('img');
                     imgLeft.src = prod.galeria[0];
@@ -369,7 +332,6 @@
                     content.appendChild(imgLeft);
                 }
 
-                // FOTO DERECHA
                 if(prod.galeria && prod.galeria[1]) {
                     const imgRight = document.createElement('img');
                     imgRight.src = prod.galeria[1];
@@ -382,9 +344,8 @@
                 wrapper.appendChild(slide);
             });
 
-            // INICIAR SWIPER EN LA POSICIÓN CORRECTA
             const swiper = new Swiper(".mySwiper", {
-                initialSlide: slideInicial, // <--- AQUÍ OCURRE LA MAGIA
+                initialSlide: slideInicial,
                 effect: "fade", 
                 fadeEffect: { crossFade: true },
                 speed: 600,
@@ -397,7 +358,6 @@
                     slideChange: function () {
                         actualizarInfo(this);
                         moverManchasAleatoriamente();
-                        // Resetear zooms al cambiar
                         document.querySelectorAll('.focused').forEach(el => el.classList.remove('focused'));
                         document.querySelectorAll('.dimmed').forEach(el => el.classList.remove('dimmed'));
                     },
@@ -459,4 +419,5 @@
 </body>
 
 </html>
+
 
